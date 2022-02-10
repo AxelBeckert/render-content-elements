@@ -14,40 +14,15 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\RecordsContentObject;
 
 /**
- * This file is part of the "Event Verwaltung" Extension for TYPO3 CMS.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * (c) 2022 Axel Beckert <a.beckert@ccmagnus.de>, ccmagnus OHG
- *
- */
-
-/**
  * EventController
  */
 class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
 
     /**
-     * eventRepository
-     *
-     * @var \Ccm\CcmEventHandling\Domain\Repository\EventRepository
-     */
-    protected $eventRepository = null;
-
-    /**
      * @var ContentRepository
      */
     protected $contentRepository = null;
-
-    /**
-     * @param \Ccm\CcmEventHandling\Domain\Repository\EventRepository $eventRepository
-     */
-    public function injectEventRepository(\Ccm\CcmEventHandling\Domain\Repository\EventRepository $eventRepository)
-    {
-        $this->eventRepository = $eventRepository;
-    }
 
     /**
      * @param ContentRepository $contentRepository
@@ -66,28 +41,15 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function listAction()
     {
-        $content = $this->renderContentOfPage(1);
-        $events = $this->eventRepository->findAll();
-        $this->view->assign('events', $events);
+        $content = $this->renderContentOfPageWith(1);
         $this->view->assign('content', $content);
-    }
-
-    /**
-     * action show
-     *
-     * @param \Ccm\CcmEventHandling\Domain\Model\Event $event
-     * @return string|object|null|void
-     */
-    public function showAction(\Ccm\CcmEventHandling\Domain\Model\Event $event)
-    {
-        $this->view->assign('event', $event);
     }
 
     /**
      * @param int $pid
      * @return string
      */
-    protected function renderContentOfPage(int $pid)
+    protected function renderContentOfPageWith(int $pid)
     {
 
         /** @var QueryResultInterface $contentObjects */
